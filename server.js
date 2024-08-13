@@ -19,7 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 const dataDir = "data/"
 
 export async function getDirContentsList(directory_path){
-    console.log("reading dir :", directory_path)
+    directory_path = path.join(dataDir,directory_path);
+    console.log("reading dir :", directory_path);
     try{
         const filenames = await fs_promises.readdir(directory_path);
         const metadata_promises = filenames.map(async (filename) => {
@@ -48,10 +49,23 @@ export async function getDirContentsList(directory_path){
 
 // getDirContentsList(path.join(dataDir, "testdir"))
 
-app.get("/", (req,res) => {
+app.get("/user/*", (req,res) => {
     console.log("listening in port", PORT)
     res.render("home.ejs");
 })
+
+// app.get("/user/:userId/path/:pathID?", async (req, res)=>{
+//     const userId = req.params.userId;
+//     const pathId = req.params.pathID || "";
+
+//     console.log("user:",userId,"path:",pathId);
+
+//     const path = userId + "/" + pathId;
+
+//     const dir_contents_list = await getDirContentsList(path);
+//     console.log(dir_contents_list)
+//     res.json(dir_contents_list)
+// })
 
 
 // all the user post functions defined 

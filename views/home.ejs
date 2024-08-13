@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<script src="home.js"></script>
-<link rel="stylesheet" href="home.css">
+<script src="/home.js" type="module"></script>
+<link rel="stylesheet" href="/home.css">
 <body>
     <p>Home page</p>
+    <button class="back-button">Back</button>
     <template directory-item-container-template>
-        <div class="directory-item-container">
-            <img width  ="100%" width="auto" src="file.svg">
+        <div class="directory-item-container" data-url="" data-redirectable="no">
+            <img width  ="100%" width="auto" src="/file.svg">
             <p class="item-name">file.svg</p>
         </div>
     </template>
@@ -13,6 +14,16 @@
     <div class = "directory-container">
         
     </div>
+
+    <script>
+        document.addEventListener('keydown', (event) => {
+            if (event.ctrlKey && event.key === 'v') {
+                event.preventDefault();
+                sessionStorage.clear();
+                console.log('Session storage cleared.');
+            }
+        });
+    </script>
     
 
 </body>
