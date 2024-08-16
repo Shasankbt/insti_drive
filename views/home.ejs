@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <script src="/home.js" type="module"></script>
+<script src="/ui_functions.js"></script>
+<script src="/download_fn.js"></script>
 <link rel="stylesheet" href="/home.css">
 <body>
-    <p>Home page</p>
-    <button class="back-button">Back</button>
+    
+    <!--------------------------Templates------------------->
     <template directory-item-container-template>
-        <div class="directory-item-container" data-url="" data-redirectable="no">
+        <div class="directory-item-container" data-url="" data-redirectable="no" >
             <img width  ="100%" width="auto" src="/file.svg">
             <p class="item-name">file.svg</p>
         </div>
     </template>
 
-    <div class = "directory-container">
-        
+    <p>Home page</p>
+    <button class="back-button">Back</button>
+    <button class="download-button">Download</button>
+    <div class="directory-container">
+        <div class="selector-rect"></div> 
     </div>
 
     <script>

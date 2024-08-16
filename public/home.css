@@ -2,9 +2,10 @@
     width: 6rem;
     position: relative;
     margin-inline: 0.5rem;
-
+    user-select: none;
     img{
         position: relative;
+        pointer-events: none;
     }
     .item-name{
         margin: 0;
@@ -12,8 +13,24 @@
         font-size: 1rem;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
+
+    
+
 }
+.directory-item-container.selected{
+    background-color: rgba(131, 203, 211, 0.5);
+    border: 1px solid rgb(131,203,211);
+    border-radius: 10px;
+}
+
 
 .directory-container{
     display: flex;
+
+    .selector-rect{
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        background-color: beige;
+    }
 }

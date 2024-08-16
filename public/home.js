@@ -9,7 +9,10 @@ function getDirectoryPath(){
     const pathId = pathSegments.slice(3).join("/") || "";
 
     console.log(userId + "/" + pathId, ":" , window.location.href)
-    return userId + "/" + pathId + "/";
+    return {
+        "user" : userId,
+        "path" : pathId
+    };
 }
 
 function backTrackURL(){
@@ -21,7 +24,7 @@ function backTrackURL(){
     return current_url.origin + "/" + backtrack_path + "/";
 }
 
-async function loadDirectoryContents(directory_path){
+async function loadDirectoryContents(directoryDetails){
     return new Promise((resolve, reject) => {
         fetch("/user/load-directory-contents", {
             method: 'POST',
@@ -29,7 +32,7 @@ async function loadDirectoryContents(directory_path){
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                "path" : directory_path
+                "req-details" : directoryDetails
             })
         })
         .then(res => {
@@ -65,15 +68,15 @@ function setDirectoryItemsAttributes(directory_item_card, direcory_item_data){
     return directory_item_card;
 }
 
-async function renderDirectoryContents(directory_path){
+async function renderDirectoryContents(directoryDetails){
     const directoryContainer = document.querySelector(".directory-container")
     const directoryItemContainerTemplate = document.querySelector("[directory-item-container-template]")
     
-    let directory_contents = getSessionDirectoryContents(directory_path);
+    let directory_contents = getSessionDirectoryContents(directoryDetails.user + "/" + directoryDetails.path);
 
     if(directory_contents["server-sync"]===0){
-        directory_contents = await loadDirectoryContents(directory_path);
-        saveSessionDirectoryContents(directory_path, directory_contents)
+        directory_contents = await loadDirectoryContents(directoryDetails);
+        saveSessionDirectoryContents(directoryDetails.user + "/" + directoryDetails.path, directory_contents)
     }
 
     if(directory_contents.response === "error")
