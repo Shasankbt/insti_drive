@@ -1,7 +1,7 @@
 import fs from 'fs';
 import express from 'express';
 import path from 'path';
-import exec from 'child_process'
+import {exec} from 'child_process'
 const fs_promises = fs.promises;
 
 import userRoutes from './router/user.js';
@@ -19,34 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 export const dataDir = "data/"
 
-export async function getDirContentsList(directoryDetails){
-    const directory_path = path.join(dataDir,directoryDetails.user, "DATA", directoryDetails.path);
-    console.log("reading dir :", directory_path);
-    try{
-        const filenames = await fs_promises.readdir(directory_path);
-        const metadata_promises = filenames.map(async (filename) => {
-            const fullPath = path.join(directory_path, filename);
-            const stats = await fs.promises.stat(fullPath);
-            return {
-                filename: filename,
-                directory: stats.isDirectory() ? "yes" : "no"
-            };
-        })
-        const files_fulldata = await Promise.all(metadata_promises)
-        console.log(files_fulldata)
-        return {
-            "response" : "ok",
-            "server-sync" : Date.now(),
-            "res-data" : files_fulldata,
-        }    
-    } catch(error) {
-        return {
-            "response" : "error",
-            "server-sync": Date.now(),
-            "error-message": error.message
-        };
-    }
-}
+
 
 // getDirContentsList(path.join(dataDir, "testdir"))
 
@@ -64,6 +37,8 @@ app.get("/user/:userId/path/*?", async (req, res)=>{
     // const dir_contents_list = await getDirContentsList(path);
     // console.log(dir_contents_list)
     // res.json(dir_contents_list)
+
+    
 
     console.log("listening in port", PORT)
     res.render("home.ejs");

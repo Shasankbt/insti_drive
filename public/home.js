@@ -24,6 +24,31 @@ function backTrackURL(){
     return current_url.origin + "/" + backtrack_path + "/";
 }
 
+async function checkServerSync(directoryDetails, local_sync){
+    return new Promise((resolve, reject)=>{
+        console.log(directoryDetails)
+        fetch("/user/get-server-sync", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "req-details": directoryDetails
+            })
+        })
+        .then(res => {
+            if(! res.ok ){
+                reject(new Error(`HTTP error! Status: ${res.status}`));
+            }
+            return res.json();
+        })
+        .then(data => {
+            const server_sync = data["server-sync"];
+            resolve(server_sync === local_sync);        
+        })
+    })
+}
+
 async function loadDirectoryContents(directoryDetails){
     return new Promise((resolve, reject) => {
         fetch("/user/load-directory-contents", {
@@ -74,7 +99,8 @@ async function renderDirectoryContents(directoryDetails){
     
     let directory_contents = getSessionDirectoryContents(directoryDetails.user + "/" + directoryDetails.path);
 
-    if(directory_contents["server-sync"]===0){
+    if( ! await checkServerSync(directoryDetails, directory_contents["server-sync"])){
+        console.log("syncing from the server")
         directory_contents = await loadDirectoryContents(directoryDetails);
         saveSessionDirectoryContents(directoryDetails.user + "/" + directoryDetails.path, directory_contents)
     }

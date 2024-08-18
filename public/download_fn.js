@@ -30,13 +30,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.blob();  // Convert the response to a Blob (binary large object)
+            const filename = response.headers.get("filename") || 'default_filename.zip'; // Get the filename from the header or use a default
+            return response.blob().then(blob => ({ filename, blob }));  // Return an object with both filename and blob
         })
-        .then(blob => {
+        .then(({ filename, blob }) => { 
+            console.log(filename);
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'your_filename.zip';  // Set the desired file name here
+            a.download = filename;  // Use the filename from the server or fallback
             document.body.appendChild(a);
             a.click();
             a.remove();  // Clean up after the click

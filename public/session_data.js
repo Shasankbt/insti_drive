@@ -10,7 +10,6 @@ export function getSessionDirectoryContents(directory_path){
         sessionStorage.setItem(directory_path, empty_template)
         return empty_template;
     }
-    console.log("fetching local data for", directory_path)
     console.log(session_directory_contents)
     return session_directory_contents;
 }   
