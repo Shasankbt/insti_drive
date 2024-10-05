@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <script src="/home.js" type="module"></script>
-<script src="/ui_functions.js"></script>
-<script src="/download_fn.js"></script>
+<script src="/ui_functions.js" type="module"></script>
+<script src="/file_functions.js" type="module"></script>
+<script src="/download_fn.js" type="module"></script>
+<script src="/upload_function.js" type="module"></script>
 <link rel="stylesheet" href="/home.css">
 <body>
     
@@ -13,11 +15,35 @@
         </div>
     </template>
 
-    <button class="back-button">Back</button>
-    <button class="download-button">Download</button>
+    <div class="directory-header no-select">
+        <button class="back-button">Back</button>
+        <button class="download-button">Download</button>
+        <div class="file-functions-container">
+            <div class="filter-options"></div>
+            <div class="selected-files-functions-container">
+                <div class="selected-files-count" style="display: inline;">Selected : 2</div>
+                <button class="delete-button" data-directory-type="<%= directoryType %>">delete</button>
+                <button>move</button>
+                <button>copy</button>
+            </div>
+            
+        </div>
+    </div>
+    
     <div class="directory-container">
         <div class="selector-rect"></div> 
     </div>
+
+    <div class="upload-files-section">
+        <button class="select-upload-button">select files to upload</button>
+
+        <input type="file" id="fileInput" style="display: none;" multiple>
+
+        <div class="upload-preview"></div>
+
+        <button class="upload-files-button">upload</button>
+    </div>
+    
 
     <script>
         document.addEventListener('keydown', (event) => {

@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     
         console.log(userId + "/" + pathId, ":" , window.location.href)
         return {
-            "user" : userId,
+            "user" : userId,    
             "path" : pathId
         };
     }

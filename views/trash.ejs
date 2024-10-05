@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<script src="/trash.js" type="module"></script>
+<script src="/ui_functions.js" type="module"></script>
+<script src="/file_functions.js" type="module"></script>
+<script src="/download_fn.js" type="module"></script>
+<link rel="stylesheet" href="/home.css">
+<body>
+    
+    <!--------------------------Templates------------------->
+    <template directory-item-container-template>
+        <div class="directory-item-container" data-url="" data-redirectable="no" >
+            <img width  ="100%" width="auto" src="/file.svg">
+            <p class="item-name">file.svg</p>
+        </div>
+    </template>
+    
+    <div class="directory-header no-select">
+        <button class="back-button">Back</button>
+        <button class="download-button">Download</button>
+        <div class="file-functions-container">
+            <div class="filter-options"></div>
+            <div class="selected-files-functions-container">
+                <div class="selected-files-count" style="display: inline;">Selected : 2</div>
+                <button class="delete-button" data-directory-type="<%= directoryType %>">delete</button>
+                <button class="restore-button" data-directory-type="<%= directoryType %>">restore</button>
+            </div>
+            
+        </div>
+    </div>
+    <div class="directory-container">
+        <div class="selector-rect"></div> 
+    </div>
+
+    <script>
+        document.addEventListener('keydown', (event) => {
+            if (event.ctrlKey && event.key === 'v') {
+                event.preventDefault();
+                sessionStorage.clear();
+                console.log('Session storage cleared.');
+            }
+        });
+    </script>
+    
+
+</body>

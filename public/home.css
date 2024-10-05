@@ -1,3 +1,23 @@
+.no-select {
+    user-select: none; /* Prevents text selection */
+    -webkit-user-select: none; /* For WebKit (Safari, Chrome) */
+    -moz-user-select: none; /* For Firefox */
+    -ms-user-select: none; /* For Internet Explorer and Edge */
+}
+
+
+.directory-header{
+    padding: 5px;
+    display: flex;
+    .file-functions-container{
+        margin-left: 1rem;
+        flex-grow: 1;
+    }
+}
+
+
+
+
 .directory-item-container{
     width: 6rem;
     position: relative;

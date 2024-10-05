@@ -16,6 +16,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+const CLIENT_DIRECTORY_TYPES = {
+    "files" : "files",
+    "trash" : "trash"
+}
+
+
 
 export const dataDir = "data/"
 
@@ -41,7 +47,26 @@ app.get("/user/:userId/path/*?", async (req, res)=>{
     
 
     console.log("listening in port", PORT)
-    res.render("home.ejs");
+    res.render("home.ejs", {
+        directoryType : CLIENT_DIRECTORY_TYPES.files
+    });
+})
+
+app.get("/user/:userId/trash/*?", async (req, res)=>{
+    const userId = req.params.userId;
+
+    // console.log("user:",userId,"path:",pathId);
+
+    // const path = userId + "/" + pathId;
+
+    // const dir_contents_list = await getDirContentsList(path);
+    // console.log(dir_contents_list)
+    // res.json(dir_contents_list)
+    
+    console.log("listening in port", PORT)
+    res.render("trash.ejs", {
+        directoryType : CLIENT_DIRECTORY_TYPES.files
+    });
 })
 
 
